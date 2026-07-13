@@ -1,0 +1,27 @@
+# Netlify configuration for VidGrab (Next.js)
+#
+# ⚠️ IMPORTANT — READ THIS:
+# The DOWNLOAD ENGINE (video/audio/channel .zip) requires yt-dlp (Python) and
+# ffmpeg running as long-lived server processes. Netlify's serverless functions
+# do NOT provide Python, ffmpeg, spawnable binaries, or long timeouts (max 26s).
+#
+# Therefore the download features WILL NOT WORK on Netlify. Netlify can only
+# serve the frontend/PWA shell. For a fully working deployment (downloads +
+# 1080p + channel .zip) use a container/VPS host such as Railway, Render,
+# Fly.io, or a Docker/VPS with Node + Python + ffmpeg installed.
+#
+# See DEPLOYMENT.md for step-by-step instructions.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+  # DATABASE_URL is NOT required to build. The DB client is lazy-loaded and the
+  # download features don't use a database. Add DATABASE_URL in the Netlify UI
+  # only if you later add DB-backed features.
+
+# Official Next.js runtime for Netlify (handles App Router + API routes).
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
